@@ -11,7 +11,7 @@ const api = axios.create({
 // Adjust if your backend runs on a different port
 export const fetchCandidates = async () => {
   try {
-    const response = await api.get(`${API_BASE_URL}/api/candidates`);
+    const response = await api.get(`/api/candidates`);
     return response.data;
   } catch (error) {
     console.error('Error fetching candidates:', error);
@@ -21,7 +21,7 @@ export const fetchCandidates = async () => {
 
 export const fetchQuestions = async () => {
   try {
-    const response = await api.get(`${API_BASE_URL}/api/questions`);
+    const response = await api.get(`/api/questions`);
     return response.data;
   } catch (error) {
     console.error('Error fetching questions:', error);
@@ -31,7 +31,7 @@ export const fetchQuestions = async () => {
 
 export const createCandidate = async (candidateData:any) => {
   try {
-    const response = await api.post(`${API_BASE_URL}/api/candidates`, candidateData);
+    const response = await api.post(`/api/candidates`, candidateData);
     return response.data;
   } catch (error) {
     console.error('Error creating candidate:', error);
@@ -41,7 +41,7 @@ export const createCandidate = async (candidateData:any) => {
 
 export const scheduleAssessment = async (payload:any) => {
   try {
-    const response = await api.post(`${API_BASE_URL}/api/assessments/schedule`, payload);
+    const response = await api.post(`/api/assessments/schedule`, payload);
     return response.data;
   } catch (error) {
     console.error('Error scheduling assessment:', error);
