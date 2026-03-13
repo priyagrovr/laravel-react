@@ -8,54 +8,37 @@ const api = axios.create({
   },
 });
 
-// Adjust if your backend runs on a different port
 export const fetchCandidates = async () => {
-  try {
-    const response = await api.get(`/api/candidates`);
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching candidates:', error);
-    throw error;
-  }
-}
+  const response = await api.get('/api/candidates');
+  return response.data;
+};
+
+export const createCandidate = async (data: { name: string; email: string; experience_years: number }) => {
+  const response = await api.post('/api/candidates', data);
+  return response.data;
+};
 
 export const fetchQuestions = async () => {
-  try {
-    const response = await api.get(`/api/questions`);
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching questions:', error);
-    throw error;
-  }
-}
+  const response = await api.get('/api/questions');
+  return response.data;
+};
 
-export const createCandidate = async (candidateData:any) => {
-  try {
-    const response = await api.post(`/api/candidates`, candidateData);
-    return response.data;
-  } catch (error) {
-    console.error('Error creating candidate:', error);
-    throw error;
-  } 
-}
+export const createQuestion = async (data: { title: string; difficulty: string; category: string }) => {
+  const response = await api.post('/api/questions', data);
+  return response.data;
+};
 
-export const scheduleAssessment = async (payload:any) => {
-  try {
-    const response = await api.post(`/api/assessments/schedule`, payload);
-    return response.data;
-  } catch (error) {
-    console.error('Error scheduling assessment:', error);
-    throw error;
-  }
-}
+export const scheduleAssessment = async (data: { candidate_id: number; question_ids: number[]; scheduled_at?: string }) => {
+  const response = await api.post('/api/assessments', data);
+  return response.data;
+};
 
-export const submitAnswer = async ({responseId, answers}: {responseId: number, answers: any}) => {
-  try {
-    const response = await api.put(`/api/responses/${responseId}`, { answers });
-    return response.data;
-  } catch (error) {
-    console.error('Error submitting answers:', error);
-    throw error;
-  }
-}
+export const submitAnswer = async (responseId: number, data: { answer_text?: string; score?: number | null }) => {
+  const response = await api.put(`/api/responses/${responseId}`, data);
+  return response.data;
+};
 
+export const fetchAssessmentReport = async (assessmentId: number) => {
+  const response = await api.get(`/api/assessments/${assessmentId}/report`);
+  return response.data;
+};

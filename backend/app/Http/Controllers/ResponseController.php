@@ -14,8 +14,8 @@ class ResponseController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'answer' => 'required|string',
-            'score' => 'required|integer|min:0|max:100',
+            'answer_text' => 'nullable|string',
+            'score' => 'nullable|integer|min:0|max:100',
         ]);
 
         $response = $this->responseService->update($id, $validated);

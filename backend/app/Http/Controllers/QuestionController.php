@@ -24,7 +24,7 @@ public function __construct(private QuestionService $questionService){
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'difficulty' => 'required|in:easy,medium,hard',
-            'category' => 'required|in:backend,frontend,hardware',
+            'category' => 'required|in:backend,frontend,database',
         ]);
 
         $question = $this->questionService->create($validated);

@@ -2,7 +2,7 @@
 namespace App\Services;
 
 use App\Models\Assessment;
-
+use Illuminate\Support\Facades\DB;
 
 class AssessmentService
 {
@@ -30,7 +30,8 @@ class AssessmentService
         $assessment = Assessment::with('candidate','responses.question')->findOrFail($assessmentId);
 
         $totalScore = $assessment->responses->sum('score');
-        
+        $responseCount = $assessment->responses->count();
+        $averageScore = $responseCount > 0 ? round($totalScore / $responseCount, 2) : 0;
 
         return [
             'assessment_id' => $assessment->id,

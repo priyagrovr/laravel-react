@@ -1,48 +1,29 @@
-import { useState } from 'react';
-import './App.css'
-import CreateQuestion from './components/CreateQuestion';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import CandidateList from './components/CandidateList';
-import CreateCandidate from './components/CreateCandidate';
-import SubmitAnswer from './components/SubmitAnswer';
+import CreateQuestion from './components/CreateQuestion';
 import ScheduleAssessment from './components/ScheduleAssessment';
+import AssessmentScreen from './components/AssessmentScreen';
+import AssessmentReport from './components/AssessmentReport';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('candidates');
-
-  const tabs = [
-    { id: 'candidates', label: 'Candidates' },
-    { id: 'questions', label: 'Create Question' },
-    { id: 'assessments', label: 'Schedule Assessment' },
-    { id: 'answer', label: 'Submit Answer' },
-    { id: 'report', label: 'Assessment Report' },
-  ];
- 
-
   return (
-    <div>
-      <h1>Assessment App </h1>
-      <nav>
-        {tabs.map(tab => (
-          <button key={tab.id} onClick={() => setActiveTab(tab.id)} style={{ marginRight: '10px' }}>
-            {tab.label}
-          </button>
-        ))}
-      </nav>
-      <div style={{ marginTop: '20px' }}>
-        {activeTab === 'candidates' && (<><CreateCandidate />
-          <div style={{margin:20}}><CandidateList /></div>
-        </>)}
-        {activeTab === 'questions' && (<><CreateQuestion />
-          </>)}
-        {activeTab === 'assessments' && (<><ScheduleAssessment>
-          </ScheduleAssessment></>)}
-         {activeTab === 'answer' && (<><SubmitAnswer />
-          </>)}
-         {/* {activeTab === 'report' && (<><AssessmentReport />
-          </>)} */}
+    <BrowserRouter>
+      <div>
+        <h1>Assessment App</h1>
+        <nav style={{ marginBottom: '20px' }}>
+          <Link to="/" style={{ marginRight: '15px' }}>Candidates</Link>
+          <Link to="/questions" style={{ marginRight: '15px' }}>Create Question</Link>
+        </nav>
+        <Routes>
+          <Route path="/" element={<CandidateList />} />
+          <Route path="/questions" element={<CreateQuestion />} />
+          <Route path="/assessments/schedule/:candidateId" element={<ScheduleAssessment />} />
+          <Route path="/assessments/:id" element={<AssessmentScreen />} />
+          <Route path="/assessments/:id/report" element={<AssessmentReport />} />
+        </Routes>
       </div>
-    </div>
-  )
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
